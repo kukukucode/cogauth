@@ -1,15 +1,49 @@
-# 人間とAIが融合する未来に必要な認知主権
-## Cognitive Sovereignty Architecture の試論
+# Cognitive Sovereignty Architecture
+## Human–AI Cognitive Security Reference Architecture の試論
 
-AIが人間の外部にある道具である限り、AIの安全性は主として情報セキュリティや個人情報保護の問題として扱える。
+> **Status:** Draft v0.2  
+> **Scope:** Human–AI融合、BCI、Personal AI、認知補助システムを想定した倫理・セキュリティ設計の試論  
+> **Goal:** 既存のneurorightsを、実装可能なsecurity architectureへ翻訳する
 
-しかし、AIが脳や神経系と直接接続され、記憶、判断、感情、身体制御などの一部を補助するようになれば、保護すべき対象は情報だけではなくなる。さらに将来、脳オルガノイドのような生体神経組織が計算資源として利用され、人間の脳、AI、生体神経組織が一つの認知システムとして協調するようになれば、AIシステムへの介入は、そのまま人間の認知への介入になり得る。
+---
 
-このとき必要になるのが、**認知主権**という考え方である。
+## 0. この文書の位置づけ
 
-認知主権とは、自分の思考、感情、記憶、神経状態について、誰に読み取らせるのか、何を推論させるのか、どのような介入を許すのか、そして自分自身をどのように変化させるのかを、最終的に本人が決定できる状態を指す。
+AIが人間の外部にある道具である限り、AIの安全性は主として情報セキュリティ、プライバシー、モデル安全性の問題として扱える。
 
-本稿では、この認知主権を中心に、自己の連続性、精神的オフライン権、本人管理信頼境界、暗号技術、脳オルガノイドを含むHuman–AI融合の安全設計について整理する。
+しかし、AIが脳や神経系と接続され、記憶、判断、感情、身体制御などの一部を補助するようになると、保護すべき対象は単なるデータではなくなる。
+
+将来的には、
+
+- BCIによる神経信号の読み取り
+- 神経刺激を含む双方向インターフェース
+- 個人に長期適応するPersonal AI
+- 身体外に存在する認知補助装置
+- 脳オルガノイドなどの生体計算資源
+
+が、一つの認知システムとして協調する可能性がある。
+
+このとき必要になるのが、**認知主権 Cognitive Sovereignty** である。
+
+本稿では認知主権を、
+
+> 自分の思考、感情、記憶、神経状態、認知インフラについて、誰に読み取らせるのか、何を推論させるのか、どのような介入を許すのか、そして自分自身をどのように変化させるのかを、最終的に本人が決定できる状態
+
+と定義する。
+
+ただし、この文書は認知主権という語そのものを新規に発明したと主張するものではない。  
+既存の **Mental Privacy / Mental Integrity / Cognitive Liberty / Psychological Continuity** などのneurorights・神経倫理上の概念を、**Human–AI Cognitive Securityの設計原則へ落とし込むこと**を目的とする。
+
+この文書で特に独自に整理するのは次の3点である。
+
+1. **精神的オフライン権**  
+   Offline Survivability / Portability / Exit / Local Control として定義する
+
+2. **Person-Controlled Trust Boundary**  
+   身体の内外ではなく、本人が最終管理する認知ドメインをセキュリティ境界とする
+
+3. **Transformation History Integrity**  
+   自己同一性そのものではなく、自分がどのように変化してきたかの履歴完全性を守る
 
 ---
 
@@ -17,7 +51,7 @@ AIが人間の外部にある道具である限り、AIの安全性は主とし�
 
 現在のスマートフォンやPCで問題になるのは、主にデータの盗難、改ざん、なりすましである。
 
-しかし、AIが神経系へ近づくにつれて、問題は段階的に変化する。
+しかしAIが神経系へ近づくほど、問題は段階的に変化する。
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{
@@ -28,472 +62,421 @@ AIが人間の外部にある道具である限り、AIの安全性は主とし�
   "secondaryColor":"#DDF4EE",
   "tertiaryColor":"#FFF2CC",
   "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
+  "textColor":"#102A43"
 }}}%%
 flowchart LR
-    A[スマートフォン・PC<br>個人情報] --> B[Personal AI<br>行動や嗜好の推定]
+    A[スマホ・PC<br>個人情報] --> B[Personal AI<br>行動・嗜好の推定]
     B --> C[BCI<br>神経信号の読み取り]
     C --> D[双方向BCI<br>神経への刺激]
-    D --> E[深いHuman–AI融合<br>記憶・判断・人格形成への関与]
+    D --> E[深いHuman–AI融合<br>記憶・判断・認知機能への関与]
 
     style A fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
     style B fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
     style C fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
-    style D fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
-    style E fill:#DFF3F6,stroke:#147D92,stroke-width:2px,color:#102A43
-```
-
-AIが脳から情報を**読む**場合、中心になるのは精神的プライバシーである。
-
-将来、神経信号から単なる運動意図だけではなく、
-
-- 何に注意を向けているか
-- 何をしようとしているか
-- どの刺激を嫌っているか
-- どの選択肢を選びやすいか
-
-といった情報まで推論できるようになれば、生の神経データだけを保護しても十分ではない。
-
-重要になるのは、**自分について何を推論させてよいのか**まで本人が決められることである。
-
-一方、AIが神経系へ情報を**書く**場合には、精神的完全性や自律性が問題になる。
-
-神経刺激は、感覚の回復、運動制御、治療などに利用できる可能性がある。しかし同時に、認知状態へ影響を与える経路にもなり得る。
-
-ただし、AIに直接的な神経刺激権限を与えなければ安全、というほど単純ではない。
-
-AIが神経へ直接writeしなくても、表示、音声、AR、推薦、ナビゲーションを通じて人間の認知へ影響を与えることはできる。
-
-したがって、重要なのは単純なread-onlyではなく、**最小権限**である。
-
----
-
-# 2. 認知主権とは何か
-
-認知主権は、一つの権利というより、複数の既存概念を統合する上位原則として考えられる。
-
-| 構成要素 | 守るもの |
-|---|---|
-| Mental Privacy | 思考や神経状態を勝手に読み取られない |
-| Mental Integrity | 精神状態を本人の意思に反して変更されない |
-| Cognitive Liberty | 自分を変える自由と、変えない自由 |
-| Psychological Continuity | 自分がどのように変化してきたかを把握できる |
-| 精神的オフライン権 | 外部AIやネットワークとの接続を拒否できる |
-| 認知インフラの本人管理 | Personal AI、鍵、記憶、補助装置を本人が最終管理する |
-
-これを図にすると、認知主権は次のように整理できる。
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{
-  "background":"#FFFFFF",
-  "primaryColor":"#E8F1FF",
-  "primaryTextColor":"#102A43",
-  "primaryBorderColor":"#1769AA",
-  "secondaryColor":"#DDF4EE",
-  "tertiaryColor":"#FFF2CC",
-  "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
-}}}%%
-mindmap
-  root((認知主権))
-    読まれない
-      Mental Privacy
-      推論の制御
-    勝手に変えられない
-      Mental Integrity
-      最小権限
-    自分で変えられる
-      Cognitive Liberty
-      認知拡張
-    自分であり続ける
-      Psychological Continuity
-      変更履歴
-    切断できる
-      精神的オフライン権
-      Offline Survivability
-    自分で管理する
-      Personal AI
-      鍵
-      認知データ
-```
-
-認知主権の中心は、単に思考を秘密にできることではない。
-
-**自分が何者になるのかを、自分自身で決定できること**である。
-
----
-
-# 3. 自己の連続性
-
-AIとの融合が深くなると、自己の連続性が重要になる。
-
-たとえば、最初は記憶検索を補助するだけだったPersonal AIが、数年後には意思決定を補助し、さらに神経インターフェースと接続され、その後、生体神経組織まで認知系へ統合されたとする。
-
-その変化が少しずつ進めば、本人は常に自分は自分であると感じ続ける可能性がある。
-
-これはテセウスの船に似ている。
-
-```text
-本人
- ↓
-Personal AIを導入
- ↓
-記憶補助を追加
- ↓
-判断補助を追加
- ↓
-BCIを追加
- ↓
-生体神経組織を追加
- ↓
-AIモデルを何度も更新
- ↓
-現在の本人
-```
-
-この過程で重要なのは、**自己の連続性そのものを暗号技術で証明することはできない**という点である。
-
-暗号技術が証明できるのは、
-
-- いつ変更が行われたか
-- どのAIモデルが使われたか
-- どの権限で処理されたか
-- どの刺激が行われたか
-- 認証されたハードウェアが使われたか
-- 不正な変更が検出されたか
-
-といった、**自己変容の履歴の完全性**である。
-
-したがって目標は、
-
-> 自分が同じ自分であることを数学的に証明すること
-
-ではなく、
-
-> **自分がどのように変化してきたのかを検証可能にすること**
-
-である。
-
-これはidentityそのものの証明ではなく、**identity transformation historyのintegrityを守ること**と考えられる。
-
----
-
-# 4. 精神的オフライン権
-
-AIが自分の認知システムの一部になった場合、データを守るだけでは不十分になる。
-
-重要なのは、**外部AIやネットワークとの接続を断っても、自分として存在し続けられること**である。
-
-これを精神的オフライン権と呼ぶ。
-
-精神的オフライン権には少なくとも次の四つが含まれる。
-
-### Offline Survivability
-
-外部AIやクラウドとの接続がなくても、最低限の記憶、判断、認知機能を維持できること。
-
-### Portability
-
-Personal AI、認知データ、記憶補助システムなどを、別のシステムへ移行できること。
-
-### Exit
-
-特定の企業、医療機関、サービス提供者との関係を終了できること。
-
-### Local Control
-
-重要な鍵、認知ポリシー、Personal AI、神経インターフェースの権限を本人が最終的に管理できること。
-
-この意味で、精神的オフライン権は単なるネット切断権ではない。
-
-**認知機能についてvendor lock-inされない権利**でもある。
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{
-  "background":"#FFFFFF",
-  "primaryColor":"#E8F1FF",
-  "primaryTextColor":"#102A43",
-  "primaryBorderColor":"#1769AA",
-  "secondaryColor":"#DDF4EE",
-  "tertiaryColor":"#FFF2CC",
-  "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
-}}}%%
-flowchart LR
-    A[クラウド契約終了]
-    B[企業倒産]
-    C[アカウント停止]
-    D[API終了]
-    E[ネット障害]
-
-    A --> F[認知機能を失わない]
-    B --> F
-    C --> F
-    D --> F
-    E --> F
-
-    F --> G[Offline Survivability]
-    F --> H[Portability]
-    F --> I[Exit]
-    F --> J[Local Control]
-
-    style F fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
-```
-
----
-
-# 5. 本人内完結ではなく、本人管理信頼境界
-
-認知主権を工学的に考えると、脳内完結という表現だけでは不十分である。
-
-Personal AIや脳オルガノイドは、必ずしも頭蓋内や身体内に置かれるとは限らない。
-
-重要なのは物理的な内外ではなく、**誰が最終的に管理する信頼領域にあるか**である。
-
-そこで、本人管理信頼境界  
-**Person-Controlled Trust Boundary**  
-という考え方を導入する。
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{
-  "background":"#FFFFFF",
-  "primaryColor":"#E8F1FF",
-  "primaryTextColor":"#102A43",
-  "primaryBorderColor":"#1769AA",
-  "secondaryColor":"#DDF4EE",
-  "tertiaryColor":"#FFF2CC",
-  "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
-}}}%%
-flowchart LR
-    subgraph PCTB[本人管理信頼境界]
-        B[人間の脳]
-        C[BCI]
-        L[Local Personal AI]
-        M[記憶・認知データ]
-        O[必要なら脳オルガノイド]
-
-        B <--> C
-        C <--> L
-        L <--> M
-        L <--> O
-    end
-
-    G[安全ゲートウェイ]
-    X[外部AI・クラウド・ネットワーク]
-
-    L <--> G
-    G <--> X
-
-    style PCTB fill:#F5FBFC,stroke:#0F766E,stroke-width:2px,color:#102A43
-    style X fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
-```
-
-この構造では、
-
-**Brain ≠ Person**
-
-であり、
-
-**Brain + trusted cognitive extensions = protected cognitive domain**
-
-と考える。
-
-つまり脳だけを守るのではなく、本人の記憶、Personal AI、認知補助装置、BCIなどを含む一つの認知ドメインを守る。
-
-クラウドや外部AIは、その外側に置く。
-
-これによって、身体外のPersonal AIを利用しながらも認知主権を維持する設計が可能になる。
-
----
-
-# 6. AIと神経系の間には独立した安全層が必要
-
-AIの権限については、read-onlyを原則とするより、**Least PrivilegeとIndependent Actuation Control**を採用する方が適切である。
-
-たとえばAIが神経刺激を必要だと判断した場合でも、AI自身が直接刺激を実行しない。
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{
-  "background":"#FFFFFF",
-  "primaryColor":"#E8F1FF",
-  "primaryTextColor":"#102A43",
-  "primaryBorderColor":"#1769AA",
-  "secondaryColor":"#DDF4EE",
-  "tertiaryColor":"#FFF2CC",
-  "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
-}}}%%
-flowchart LR
-    A[AI<br>刺激を提案]
-    B[Safety Controller<br>医学・安全条件を検証]
-    C[User Policy / Consent<br>本人の権限条件を確認]
-    D[Hardware Interlock<br>電圧・時間・範囲を制限]
-    E[Neural Interface<br>刺激を実行]
-    F[人間の神経系]
-
-    A --> B --> C --> D --> E --> F
-
-    style A fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
-    style B fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
-    style C fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
     style D fill:#FFF2CC,stroke:#A96F00,stroke-width:2px,color:#102A43
-    style E fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
-```
-
-ここで重要なのは、
-
-**AIが提案すること**と  
-**AIが実行すること**を分離することである。
-
-AIが侵害されたとしても、独立した安全層を突破しなければ直接神経へ書き込めない構造を作る。
-
-これは通常のコンピューターセキュリティにおける最小権限や権限分離を、神経系まで拡張した考え方である。
-
----
-
-# 7. 脳オルガノイドはどこまで現実的か
-
-脳オルガノイドを計算に利用する研究自体は、すでに存在する。
-
-生体神経組織へ電気信号を入力し、その反応を読み取って計算に利用するという基本構造は研究されている。
-
-したがって、
-
-```text
-AI
- ↓ 電気刺激
-脳オルガノイド
- ↓ 神経活動
-AI
-```
-
-という構造そのものは、完全なSFではない。
-
-しかし、ここから先は現在と未来仮説を明確に分ける必要がある。
-
-現時点の脳オルガノイドが、
-
-- 人間レベルの記憶
-- 人格
-- 自己意識
-- 主体的な価値判断
-
-を持つと示されたわけではない。
-
-したがって、本稿で扱う、
-
-> オルガノイドが人間の記憶や人格形成に長期的に参加する可能性
-
-は、**将来仮説**として扱うべきである。
-
-仮に将来、オルガノイドが長期記憶や人格形成に機能的に統合されるなら、オルガノイドを交換、停止、更新することは、単なるハードウェア交換ではなくなる可能性がある。
-
-その段階では、
-
-- 本人の一部なのか
-- 独立した生体知性なのか
-- 所有物なのか
-- 新しい主体なのか
-
-という倫理問題が生じる。
-
----
-
-# 8. ZKPは何を守れるのか
-
-ZKPは非常に有用だが、できることとできないことを分ける必要がある。
-
-ZKPが得意なのは、
-
-> **秘密情報そのものを公開せず、ある条件を満たしていることだけを証明すること**
-
-である。
-
-たとえば、
-
-- 認可されたファームウェアが動いている
-- 神経刺激パラメータが安全範囲内である
-- 有効な認証credentialを持っている
-- 本人の許可条件に一致する署名が存在する
-
-といった事実はZKPと相性が良い。
-
-一方で、ZKPは、
-
-- 本人が内容を本当に理解したか
-- 脅迫されていなかったか
-- 認知能力が十分だったか
-- 現在も同意しているか
-
-までは証明できない。
-
-つまり、ZKPが扱えるのは**暗号学的事実**であって、本人の内面的な意思そのものではない。
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{
-  "background":"#FFFFFF",
-  "primaryColor":"#E8F1FF",
-  "primaryTextColor":"#102A43",
-  "primaryBorderColor":"#1769AA",
-  "secondaryColor":"#DDF4EE",
-  "tertiaryColor":"#FFF2CC",
-  "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
-}}}%%
-flowchart TB
-    A[ZKPで証明できる]
-    B[有効なcredential]
-    C[認可されたソフトウェア]
-    D[安全条件の充足]
-
-    E[ZKPだけでは証明できない]
-    F[理解した上での同意]
-    G[脅迫がないこと]
-    H[主体的意思]
-    I[現在も同意していること]
-
-    A --> B
-    A --> C
-    A --> D
-
-    E --> F
-    E --> G
-    E --> H
-    E --> I
-
-    style A fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
     style E fill:#FFE8E6,stroke:#C0392B,stroke-width:2px,color:#7A1F1F
 ```
 
-そのため、ZKPは認知主権を単独で保証する技術ではなく、**認知主権を支える検証技術の一つ**と位置付けるべきである。
+神経信号を**読む**場合にはMental Privacyが問題になる。  
+神経系へ**書く**場合にはMental IntegrityやAutonomyが問題になる。
+
+さらに、直接神経刺激をしなくても、Personal AIが表示、音声、AR、推薦、ナビゲーションを個人の状態に合わせて最適化すれば、認知へ強く影響できる。
+
+そのため、認知への介入は二値ではなく、層として扱う。
 
 ---
 
-# 9. 分散台帳は必須ではない
+# 2. Cognitive Intervention Levels
 
-変更履歴を改ざんされにくくするという目的に対して、分散台帳は有力な選択肢ではある。
+認知への介入をすべて同じものとして扱うと、通常の教育や助言までセキュリティ介入になってしまう。
 
-しかし、必ずしもブロックチェーン型の分散台帳が必要というわけではない。
+そこで、本稿では認知への影響を次の4層に分ける。
 
-認知履歴の検証には、
+| Level | 種類 | 例 | 主な論点 |
+|---|---|---|---|
+| **L1** | Direct Neural Actuation | 電気刺激、磁気刺激、埋込電極 | 身体・精神の完全性、安全性 |
+| **L2** | Neural Inference | 神経信号から意図や状態を推定 | Mental Privacy、推論権限 |
+| **L3** | Adaptive Cognitive Manipulation | 個人状態に適応した推薦、AR、音声誘導 | 自律性、長期的影響、透明性 |
+| **L4** | Ordinary Information / Persuasion | 一般的な情報、広告、助言 | 通常の情報倫理・メディア倫理 |
 
-- append-only transparency log
-- Merkle tree
-- デジタル署名
-- hash / commitment
-- 独立監査
-- 必要に応じた分散台帳
+Cognitive Sovereignty Architectureが最も強く制御すべきなのは、L1とL2である。  
+L3は技術的な境界が曖昧になりやすく、今後の制度設計が重要になる。  
+L4は通常の情報社会における説得や表現の問題と区別する。
 
-などの組み合わせも考えられる。
+---
 
-特に認知データは極めて機密性が高いため、詳細な神経履歴そのものを公開台帳へ記録する設計は避けるべきである。
+# 3. 認知主権を構成する権利
+
+認知主権は単一の権利ではなく、複数の原則を束ねる上位概念として扱う。
+
+| 構成要素 | 守るもの |
+|---|---|
+| **Mental Privacy** | 思考・神経状態・推論結果を無断で取得されない |
+| **Mental Integrity** | 精神状態を本人の意思に反して変更されない |
+| **Cognitive Liberty** | 自分を変える自由と、変えない自由 |
+| **Psychological Continuity** | 人格や精神生活の連続性を不当に侵害されない |
+| **精神的オフライン権** | 外部AIとの接続を断っても認知機能を維持できる |
+| **Control of Cognitive Infrastructure** | Personal AI、認知データ、鍵、補助装置を本人が最終管理する |
+
+2017年、Ienca & Andornoは cognitive liberty, mental privacy, mental integrity, psychological continuity の4つを神経技術時代に重要となる権利として整理した。  
+UNESCOも2025年にRecommendation on the Ethics of Neurotechnologyを採択しており、神経技術の倫理はすでに国際的な制度論の対象になっている。
+
+本稿の目的は、これらをそのまま再定義することではなく、**セキュリティ境界、権限管理、監査、復旧可能性へ翻訳すること**である。
+
+---
+
+# 4. Threat Model
+
+Architectureとして最初に必要なのは、誰から何を守るのかを明示することである。
+
+## 4.1 Assets
+
+保護対象は次の通り。
+
+| Asset | 侵害された場合の影響 |
+|---|---|
+| Neural raw data | 神経状態の漏洩 |
+| Derived mental inference | 感情、意図、嗜好、判断傾向の無断推定 |
+| Personal AI memory | 記憶補助や長期コンテキストの漏洩・改ざん |
+| Stimulation capability | 不正な神経刺激 |
+| Cognitive history | 変更履歴の改ざん |
+| Cryptographic keys | 本人権限の奪取 |
+| Consent / policy state | 本人の許可条件の書き換え |
+| Personal AI model | 行動・出力・判断補助の改ざん |
+| Firmware / hardware state | 安全機構の無効化 |
+
+## 4.2 Potential Adversaries
+
+想定する攻撃者には、外部の犯罪者だけでなく、正規のアクセス権を持つ主体も含む。
+
+```text
+Cloud Provider
+Device Manufacturer
+Malware / Remote Attacker
+Clinician / Operator
+Employer
+Government
+Physical Attacker
+Compromised Personal AI
+Compromised Safety Controller
+Insider
+```
+
+ここで重要なのは、AIそのものを善意の主体として前提にしないことである。
+
+**AIモデルが侵害される、誤作動する、または不適切な目的関数を持つ可能性を前提に設計する。**
+
+## 4.3 Security Goals
+
+最低限の目標は次の通り。
+
+- Confidentiality
+- Integrity
+- Availability
+- Authenticity
+- Authorization
+- Revocability
+- Auditability
+- Recoverability
+- Offline Survivability
+
+---
+
+# 5. Person-Controlled Trust Boundary
+
+身体の中にあるものが本人で、身体の外にあるものが外部、という区分では将来の認知システムを扱えない。
+
+長期間利用するPersonal AI、記憶補助装置、BCI制御装置は、身体外に存在していても実質的に認知の一部になる可能性がある。
+
+そこで、物理的な身体境界ではなく、**本人が最終的に管理する信頼境界**を定義する。
+
+これを **Person-Controlled Trust Boundary: PCTB** と呼ぶ。
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43"
+}}}%%
+flowchart LR
+    subgraph PCTB[Person-Controlled Trust Boundary]
+        B[Brain]
+        N[Neural Interface]
+        A[Local Personal AI]
+        M[Memory / Cognitive Data]
+        K[Keys / Policies]
+        O[Optional Biological Compute]
+
+        B <--> N
+        N <--> A
+        A <--> M
+        A <--> K
+        A <--> O
+    end
+
+    G[Controlled Gateway]
+    X[Cloud / External AI / Provider]
+
+    A <--> G
+    G <--> X
+
+    style PCTB fill:#F3FBF9,stroke:#0F766E,stroke-width:3px,color:#102A43
+    style G fill:#FFF2CC,stroke:#A96F00,stroke-width:2px,color:#102A43
+    style X fill:#FFE8E6,stroke:#C0392B,stroke-width:2px,color:#7A1F1F
+```
+
+考え方は、
+
+**Brain ≠ Person**
+
+ではなく、
+
+**Brain + trusted cognitive extensions = protected cognitive domain**
+
+である。
+
+ただしPCTB内部の全要素を無条件に信用するわけではない。  
+PCTBとは、本人が**ポリシー、鍵、更新、権限、撤回**について最終的な統制を持つ領域を意味する。
+
+---
+
+# 6. Capability Model
+
+アクセス権限を単純なread/writeだけで表現すると粗すぎる。
+
+認知システムでは、少なくとも次のCapabilityを分離する。
+
+| Capability | 内容 |
+|---|---|
+| Observe | 生の神経信号を取得する |
+| Infer | 神経信号から状態・意図を推論する |
+| Store | 認知データや推論を保存する |
+| Recommend | 人間へ情報や選択肢を提示する |
+| Propose Actuation | 神経刺激を提案する |
+| Approve Actuation | 刺激を許可する |
+| Execute Actuation | 実際に刺激する |
+| Modify Model | Personal AIのモデルや設定を変更する |
+| Modify Policy | 認知アクセス権限を変更する |
+| Export | データをPCTB外へ送る |
+
+原則は **Least Privilege** とする。
+
+AIが神経刺激を必要と判断しても、AI自身にExecute Actuation権限を与える必要はない。
+
+---
+
+# 7. Independent Actuation Control
+
+最も危険なCapabilityは、神経系への直接的なActuationである。
+
+AIが提案することと、実際に刺激することを分離する。
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43"
+}}}%%
+flowchart LR
+    A[AI<br>Propose] --> S[Safety Controller<br>Validate]
+    S --> P[User Policy<br>Authorize]
+    P --> H[Hardware Interlock<br>Enforce Limits]
+    H --> N[Neural Interface<br>Execute]
+    N --> B[Human Nervous System]
+
+    style A fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
+    style S fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style P fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style H fill:#FFF2CC,stroke:#A96F00,stroke-width:2px,color:#102A43
+    style N fill:#FFE8E6,stroke:#C0392B,stroke-width:2px,color:#7A1F1F
+```
+
+原則として、
+
+> **AI may propose. Independent systems must authorize and constrain actuation.**
+
+とする。
+
+Safety Controllerも単一障害点にしないことが望ましい。  
+重要な刺激では、複数条件の一致、ハードウェア上限、時間制限、物理的停止機構を組み合わせる。
+
+---
+
+# 8. Cryptographic Proof ≠ Physical Truth
+
+ZKPやデジタル署名は重要だが、暗号学的証明と物理世界の事実を混同してはいけない。
+
+ZKPが証明できるのは、基本的にはある数学的statementが成立することである。
+
+たとえば、
+
+- 有効なcredentialを持っている
+- 署名されたポリシーに適合する
+- 記録された刺激値が許容範囲内である
+
+といった条件は証明できる。
+
+しかし、
+
+- 実機で本当にそのファームウェアが動いている
+- 実際の電極出力が記録値と一致している
+- センサーが物理的に改ざんされていない
+
+ことは、ZKPだけでは保証できない。
+
+そのため、物理システムへ接続するには次のようなchain of trustが必要になる。
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43"
+}}}%%
+flowchart LR
+    R[Hardware Root of Trust] --> M[Measured Boot / Firmware Measurement]
+    M --> A[Remote Attestation]
+    A --> Z[Optional ZK Proof]
+    Z --> V[Verifier / Policy Engine]
+
+    style R fill:#FFF2CC,stroke:#A96F00,stroke-width:2px,color:#102A43
+    style M fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style A fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
+    style Z fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
+```
+
+NISTもhardware roots of trustとremote attestationを、実行プラットフォームのintegrityを測定・証明するための仕組みとして扱っている。
+
+同じ考え方は神経刺激にも必要である。
+
+**Commanded stimulation ≠ Delivered stimulation**
+
+である。
+
+そのため、重要な用途では出力側の測定・feedback・hardware limitまで含める必要がある。
+
+---
+
+# 9. Psychological Continuity と Transformation History Integrity
+
+Psychological Continuityは既存のneurorights・神経倫理で用いられる概念であり、人格や精神生活の連続性を外部介入から守る問題を含む。
+
+一方、本稿で工学的に扱いたいのは少し異なる。
+
+暗号技術によって、
+
+> 自分が同じ自分であること
+
+を証明することはできない。
+
+しかし、
+
+> 自分がどのように変化してきたのか
+
+について、変更履歴のintegrityを検証可能にすることはできる。
+
+これを本稿では **Transformation History Integrity** と呼ぶ。
+
+対象には例えば次が含まれる。
+
+- Personal AI model update
+- Firmware update
+- Policy change
+- Permission grant / revoke
+- Neural stimulation event
+- Cognitive memory modification
+- Key rotation
+- External model access
+- Emergency override
+
+```text
+Identity itself
+    ≠ cryptographically provable
+
+Transformation history
+    = can be signed
+    = can be committed
+    = can be audited
+    = can be verified
+```
+
+したがって、Cognitive Sovereignty Architectureが保証するのは人格同一性そのものではなく、**認知変容履歴の真正性・完全性・検証可能性**である。
+
+---
+
+# 10. 精神的オフライン権
+
+Personal AIが認知システムの一部になれば、単なるright to disconnectでは不十分になる。
+
+外部サービスとの接続を失ったときにも、自分として存続できる必要がある。
+
+精神的オフライン権を次の4要素で定義する。
+
+## 10.1 Offline Survivability
+
+クラウドや外部AIとの通信が停止しても、最低限必要な記憶、認知補助、本人確認、安全制御が機能すること。
+
+## 10.2 Portability
+
+Personal AI、認知データ、設定、長期記憶などを別システムへ移行可能であること。
+
+## 10.3 Exit
+
+企業、医療機関、クラウド事業者などとの関係を終了しても、本人の基礎的認知機能が失われないこと。
+
+## 10.4 Local Control
+
+重要な鍵、権限ポリシー、認知データ、緊急停止手段について、本人または本人が事前指定した主体が最終的な統制を持つこと。
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43"
+}}}%%
+flowchart TB
+    F[精神的オフライン権]
+    A[Offline Survivability]
+    B[Portability]
+    C[Exit]
+    D[Local Control]
+
+    F --> A
+    F --> B
+    F --> C
+    F --> D
+
+    style F fill:#DFF3F6,stroke:#147D92,stroke-width:3px,color:#102A43
+```
+
+これは、認知機能についてのvendor lock-inを避けるための原則でもある。
+
+---
+
+# 11. Provenance / ZKP / Verifiable Log
+
+認知履歴の検証に、すべてをブロックチェーンへ保存する必要はない。
+
+むしろ、生の神経データや詳細な認知履歴を公開台帳へ保存することは避けるべきである。
 
 より自然なのは、
 
@@ -506,264 +489,322 @@ flowchart TB
   "secondaryColor":"#DDF4EE",
   "tertiaryColor":"#FFF2CC",
   "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
+  "textColor":"#102A43"
 }}}%%
 flowchart LR
-    A[詳細な認知・神経履歴]
-    B[本人管理の暗号化ストレージ]
-    C[Hash / Commitment]
-    D[外部の検証可能ログ]
-    E[監査者]
+    D[Detailed Cognitive Records] --> L[Encrypted Local Storage]
+    L --> C[Hash / Commitment]
+    C --> T[Append-only Transparency Log]
+    T --> U[Independent Auditor]
+    L --> Z[Selective ZK Proof]
+    Z --> V[Verifier]
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-
-    style B fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
-    style D fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
+    style L fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style C fill:#FFF2CC,stroke:#A96F00,stroke-width:2px,color:#102A43
+    style T fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
 ```
 
 という構造である。
 
-詳細情報は本人管理下に置き、外部には改ざん検知に必要な証拠だけを残す。
+Certificate Transparencyで利用されているようなappend-only Merkle logは、履歴の一貫性や改ざん検知の参考モデルになる。
 
-この方がZKPとの相性も良い。
+ZKPは、
 
----
+- 許可された条件に適合している
+- 特定の秘密情報を公開せず資格を持つことを示す
+- 詳細履歴を公開せずポリシー適合性だけを示す
 
-# 10. セキュリティは順位ではなく多層防御として考える
+といった用途に向く。
 
-以前の考え方として、
+一方、ZKPだけでは、
 
-> Isolation → Minimization → Encryption → Verification
+- 本人が内容を理解していたか
+- 強制されていなかったか
+- 現在も同意しているか
 
-という順序を想定できる。
+までは保証できない。
 
-しかし、これは厳密な順位というより、複数の防御原則として考える方が適切である。
+そのため、
 
-より工学的には次のように整理できる。
-
-## Local-first
-
-最も機密性の高い認知処理は、本人管理信頼境界の内部で処理する。
-
-## Data Minimization
-
-外部に出す情報を必要最低限にする。
-
-## Cryptographic Protection
-
-外部へ出す情報は通信時、保存時、必要に応じて計算時にも保護する。
-
-## Continuous Verification
-
-認証、secure boot、integrity verification、command authentication、監査などを継続的に行う。
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{
-  "background":"#FFFFFF",
-  "primaryColor":"#E8F1FF",
-  "primaryTextColor":"#102A43",
-  "primaryBorderColor":"#1769AA",
-  "secondaryColor":"#DDF4EE",
-  "tertiaryColor":"#FFF2CC",
-  "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
-}}}%%
-flowchart LR
-    A[Local-first]
-    B[Data Minimization]
-    C[Cryptographic Protection]
-    D[Continuous Verification]
-
-    A --- B
-    B --- C
-    C --- D
-
-    style A fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
-    style B fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
-    style C fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
-    style D fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
-```
-
-ここで重要なのは、暗号技術だけに依存しないことである。
-
-暗号化されていても、
-
-- 実装バグ
-- 秘密鍵の侵害
-- ハードウェア脆弱性
-- サプライチェーン攻撃
-- 設定ミス
-- 内部者攻撃
-
-などは残る。
-
-そのため、認知主権を守るには、**攻撃面そのものを減らす設計**が必要になる。
-
----
-
-# 11. 認知主権は技術だけでは成立しない
-
-どれほど強い暗号技術を使っても、制度そのものが本人の主権を認めなければ意味がない。
-
-たとえば企業や政府が、
-
-- 就職条件として常時BCI接続を要求する
-- 精神状態の証明を強制する
-- Personal AIの使用を特定企業に限定する
-- 接続を拒否した人を不利益に扱う
-
-といった制度を作れば、暗号技術が完璧に動いていても認知主権は侵害される。
-
-したがって、Human–AI融合には多層的なガバナンスが必要になる。
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{
-  "background":"#FFFFFF",
-  "primaryColor":"#E8F1FF",
-  "primaryTextColor":"#102A43",
-  "primaryBorderColor":"#1769AA",
-  "secondaryColor":"#DDF4EE",
-  "tertiaryColor":"#FFF2CC",
-  "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
-}}}%%
-flowchart TB
-    A[認知主権]
-    B[権利]
-    C[制度]
-    D[暗号・ソフトウェア]
-    E[ハードウェア]
-    F[独立監査]
-
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    C --> F
-    D --> F
-
-    style A fill:#D8F0F3,stroke:#0B7285,stroke-width:3px,color:#102A43
-```
-
-具体的には、
-
-- 本人の同意
-- 拒否権
-- 接続しない権利
-- Portability
-- Exit
-- 独立監査
-- 企業や政府による認知操作の制限
-- ハードウェアレベルの安全装置
-- 暗号学的監査
-
-などを組み合わせる必要がある。
-
----
-
-# 12. Cognitive Sovereignty Architecture
-
-ここまでの考えを一つのアーキテクチャとしてまとめると、次のようになる。
-
-## 権利・哲学側
-
-**Cognitive Sovereignty**
-
-= Mental Privacy  
-+ Mental Integrity  
-+ Cognitive Liberty  
-+ Psychological Continuity  
-+ 精神的オフライン権  
-+ Control of Cognitive Infrastructure
-
-## 工学側
-
-**Cognitive Sovereignty Architecture**
-
-= Local-first  
-+ Least Privilege  
-+ Independent Actuation Control  
-+ Cryptographic Provenance  
-+ Verifiable Audit  
-+ Offline Survivability  
-+ Portability  
-+ Person-Controlled Trust Boundary
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{
-  "background":"#FFFFFF",
-  "primaryColor":"#E8F1FF",
-  "primaryTextColor":"#102A43",
-  "primaryBorderColor":"#1769AA",
-  "secondaryColor":"#DDF4EE",
-  "tertiaryColor":"#FFF2CC",
-  "lineColor":"#526D82",
-  "textColor":"#102A43",
-  "fontFamily":"Arial, sans-serif"
-}}}%%
-flowchart LR
-    subgraph R[権利・哲学]
-        R1[Mental Privacy]
-        R2[Mental Integrity]
-        R3[Cognitive Liberty]
-        R4[Psychological Continuity]
-        R5[精神的オフライン権]
-        R6[認知インフラの本人管理]
-    end
-
-    subgraph E[工学]
-        E1[Local-first]
-        E2[Least Privilege]
-        E3[Independent Actuation Control]
-        E4[Cryptographic Provenance]
-        E5[Verifiable Audit]
-        E6[Offline Survivability]
-    end
-
-    R --> C[認知主権アーキテクチャ]
-    E --> C
-
-    style C fill:#DFF3F6,stroke:#147D92,stroke-width:3px,color:#102A43
-```
-
----
-
-# 13. 最終的に守るべきもの
-
-Human–AI融合について考えるとき、目的を人間を現在の形のまま保存することに置く必要はない。
-
-AIや生体神経組織によって、人間の認知能力や身体能力が変化する未来そのものを否定する必要もない。
-
-重要なのは、**変化する自由と、変化させられない自由を同時に守ること**である。
-
-自分を拡張したい人にはその自由がある。
-
-現在の自分を維持したい人にも、その自由がある。
-
-AIとの接続を望む人にはその自由がある。
-
-切断して生きたい人にも、その自由がある。
-
-そのために必要なのが、
-
-- 認知主権
-- 自己の連続性
-- 精神的オフライン権
-- 本人管理信頼境界
-- 最小権限
-- 独立した安全制御
-- 検証可能な変更履歴
-- ローカルで生存可能な認知システム
+**Cryptographic validity ≠ Ethical legitimacy**
 
 である。
 
-最終的に目指すべきなのは、人間がAIとつながらない未来ではない。
+---
 
-## AIと深く融合したとしても、自分が何者になるかを自分自身で選択できる未来である。
+# 12. Failure / Recovery / Delegation Model
 
+本人がすべての秘密鍵を単独管理すれば認知主権が守られる、とは限らない。
+
+現実には、
+
+- 意識喪失
+- 認知能力低下
+- 鍵紛失
+- 端末破損
+- 医療緊急時
+- 本人死亡
+- 攻撃下での強制
+
+などがある。
+
+したがって、ArchitectureにはRecoveryを最初から含める。
+
+最低限、次の4つが必要になる。
+
+| Mechanism | 目的 |
+|---|---|
+| Delegation | 事前指定した代理人・医療者へ限定権限を渡す |
+| Recovery | 鍵や端末を失った際に安全に復旧する |
+| Emergency Access | 生命に関わる状況で限定的なbreak-glass accessを許す |
+| Revocation | 侵害された鍵・装置・AI・代理権限を失効させる |
+
+重要なのは、緊急アクセスが通常アクセスへ恒久化しないことである。
+
+Emergency Accessには、
+
+- 最小権限
+- 時間制限
+- 目的制限
+- 強制監査ログ
+- 事後通知
+- 自動失効
+
+を求める。
+
+---
+
+# 13. 脳オルガノイドの扱い
+
+脳オルガノイドを計算へ利用する研究はすでに存在する。
+
+2023年のBrainowareでは、脳オルガノイドへ電気刺激を与え、その活動を読み取るreservoir computingが実証された。  
+Organoid Intelligenceも、生体神経組織を計算へ利用する研究領域として提案されている。
+
+ただし、現在の脳オルガノイドに、
+
+- 人間レベルの記憶
+- 人格
+- 自己意識
+- 主体的価値判断
+
+が存在すると示されたわけではない。
+
+したがって、
+
+> オルガノイドが長期記憶や人格形成に機能的に統合される
+
+という議論は、**将来仮説**として明確に分ける。
+
+仮に将来そのような統合が起きた場合には、セキュリティ問題だけでなく、
+
+- 本人の一部か
+- 独立した主体か
+- 所有可能な計算資源か
+- 停止・交換・複製にどのような倫理的制約があるか
+
+という別のmoral status問題が生じる。
+
+---
+
+# 14. Design Principles
+
+Cognitive Sovereignty Architectureの基本原則を次のようにまとめる。
+
+## Local-first
+
+高機密な認知処理はPCTB内部で処理する。
+
+## Data Minimization
+
+外部へ送る神経・認知情報を必要最小限にする。
+
+## Least Privilege
+
+AI、アプリ、医療者、クラウドに必要以上のCapabilityを与えない。
+
+## Independent Actuation Control
+
+AIと神経刺激の実行権限を分離する。
+
+## Cryptographic Provenance
+
+モデル、ファームウェア、ポリシー、認知履歴の出所と変更を検証可能にする。
+
+## Continuous Verification
+
+secure boot、attestation、command authentication、integrity verificationを継続的に行う。
+
+## Offline Survivability
+
+外部ネットワークなしでも最低限の認知機能を保つ。
+
+## Portability / Exit
+
+サービス事業者を変更・離脱しても自己の認知資産を失わない。
+
+## Recoverability
+
+本人が通常状態で操作できない場合にも、事前ルールに基づいて安全に復旧できる。
+
+---
+
+# 15. Reference Architecture
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43"
+}}}%%
+flowchart TB
+    subgraph USER[Person-Controlled Trust Boundary]
+        B[Brain / Nervous System]
+        NI[Neural Interface]
+        PA[Local Personal AI]
+        MEM[Memory / Cognitive Data]
+        POL[Keys / Policy Engine]
+        SC[Independent Safety Controller]
+        HI[Hardware Interlock]
+
+        B <--> NI
+        NI <--> HI
+        HI <--> SC
+        SC <--> PA
+        PA <--> MEM
+        PA <--> POL
+    end
+
+    AT[Attestation / Provenance]
+    GW[Controlled Gateway]
+    EXT[External AI / Cloud]
+    AUD[Independent Audit Log]
+    REC[Recovery / Delegation]
+
+    PA <--> GW
+    GW <--> EXT
+    PA --> AT
+    SC --> AT
+    AT --> AUD
+    REC --> POL
+
+    style USER fill:#F3FBF9,stroke:#0F766E,stroke-width:3px,color:#102A43
+    style EXT fill:#FFE8E6,stroke:#C0392B,stroke-width:2px,color:#7A1F1F
+    style GW fill:#FFF2CC,stroke:#A96F00,stroke-width:2px,color:#102A43
+    style AUD fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
+```
+
+このArchitectureで重要なのは、
+
+> **本人がAIを完全に信用すること**
+
+ではない。
+
+むしろ、
+
+> **AI、クラウド、デバイス、運用者のいずれかが侵害されても、単独では人間の認知主権を奪えないこと**
+
+を目標にする。
+
+---
+
+# 16. Non-Goals
+
+この文書は次を保証しない。
+
+- 哲学的な自己同一性の証明
+- AIが倫理的に正しい判断をすること
+- 同意が完全に自発的であることの暗号学的証明
+- 神経技術の医学的有効性
+- 現在の脳オルガノイドに意識があるという主張
+- すべての認知への影響を技術的に防ぐこと
+- 政治・法律・医療倫理をセキュリティ技術だけで解決すること
+
+---
+
+# 17. Open Questions
+
+今後さらに詰めるべき論点は多い。
+
+- PCTBの最小構成は何か
+- 本人の鍵を誰がどの条件でrecoveryできるか
+- 本人の認知能力が変化した場合のconsentをどう扱うか
+- Emergency Accessの濫用をどう防ぐか
+- L3 Adaptive Cognitive Manipulationをどこから規制対象にするか
+- Personal AIのlong-term memoryをどこまで本人の一部として扱うか
+- AIモデル更新が人格形成に与える影響をどう監査するか
+- 認知データのportability標準をどう設計するか
+- 神経刺激のphysical attestationをどう実装するか
+- organoid computeがmoral statusを持つ条件をどう考えるか
+
+---
+
+# 18. Conclusion
+
+Human–AI融合について考えるとき、目標を人間を現在の形のまま保存することに置く必要はない。
+
+重要なのは、
+
+**変化する自由**と  
+**変化させられない自由**
+
+を同時に守ることである。
+
+AIとの接続を望む人にはその自由がある。  
+接続を拒否したい人にもその自由がある。  
+認知能力を拡張したい人にもその自由がある。  
+現在の自分を維持したい人にもその自由がある。
+
+そのために必要なのが、
+
+- Cognitive Sovereignty
+- Person-Controlled Trust Boundary
+- Least Privilege
+- Independent Actuation Control
+- Transformation History Integrity
+- Cryptographic Provenance
+- Verifiable Audit
+- Offline Survivability
+- Portability
+- Recovery / Revocation
+
+である。
+
+## AIと深く融合したとしても、自分が何者になるかを自分自身で選択できる未来を目指す。
+
+---
+
+# References
+
+1. Ienca, M. & Andorno, R. **Towards new human rights in the age of neuroscience and neurotechnology.** *Life Sciences, Society and Policy* 13, 5 (2017).  
+   https://pubmed.ncbi.nlm.nih.gov/28444626/  
+   DOI: 10.1186/s40504-017-0050-1
+
+2. UNESCO. **Recommendation on the Ethics of Neurotechnology.** Adopted at the 43rd session of the General Conference (2025).  
+   https://www.unesco.org/en/node/86248
+
+3. Jiang, X. et al. **Cybersecurity in neural interfaces: Survey and future trends.** *Computers in Biology and Medicine* 167, 107604 (2023).  
+   https://pubmed.ncbi.nlm.nih.gov/37883851/  
+   DOI: 10.1016/j.compbiomed.2023.107604
+
+4. Cai, H. et al. **Brain organoid reservoir computing for artificial intelligence.** *Nature Electronics* 6, 1032–1039 (2023).  
+   https://www.nature.com/articles/s41928-023-01069-w  
+   DOI: 10.1038/s41928-023-01069-w
+
+5. Smirnova, L. et al. **Organoid intelligence (OI): the new frontier in biocomputing and intelligence-in-a-dish.** *Frontiers in Science* 1 (2023).  
+   https://www.frontiersin.org/journals/science/articles/10.3389/fsci.2023.1017235/full  
+   DOI: 10.3389/fsci.2023.1017235
+
+6. NIST CSRC. **Zero-Knowledge Proof — Glossary.**  
+   https://csrc.nist.gov/glossary/term/zero_knowledge_proof
+
+7. NIST. **Using Hardware-Enabled Security to Ensure System Platform Integrity** — hardware roots of trust and remote attestation.  
+   https://www.nist.gov/publications/using-hardware-enabled-security-ensure-5g-system-platform-integrity-applying-5g
+
+8. RFC 6962. **Certificate Transparency.** Append-only Merkle logs and consistency proofs.  
+   https://www.rfc-editor.org/rfc/rfc6962
