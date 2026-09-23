@@ -1,0 +1,56 @@
+# Illustrative example only.
+# Not an implemented protocol, medical specification, or safety certification.
+
+policy_version: "0.1"
+
+principal:
+  id: personal_ai
+  type: ai_agent
+
+capability:
+  action: propose_actuation
+  target: left_motor_cortex
+
+purpose:
+  id: motor_assistance
+
+constraints:
+  max_amplitude_ma: 0
+  expires_in_seconds: 30
+  export_allowed: false
+
+authorization:
+  requires:
+    - user_policy
+    - safety_controller
+
+execution:
+  personal_ai: denied
+  safety_controller: approval_only
+  hardware_interlock: required
+  neural_interface: execution_only
+
+attestation:
+  firmware_measurement_required: true
+  secure_boot_required: true
+  hardware_root_of_trust_required: true
+
+audit:
+  mandatory: true
+  record:
+    - principal
+    - capability
+    - target
+    - purpose
+    - policy_version
+    - approvals
+    - attestation_status
+    - timestamp
+
+revocation:
+  supported: true
+  immediate_on:
+    - user_request
+    - attestation_failure
+    - policy_change
+    - safety_controller_failure
