@@ -20,17 +20,28 @@ AIが人間の外部にある道具である限り、AIの安全性は主とし�
 しかし、AIが神経系へ近づくにつれて、問題は段階的に変化する。
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 flowchart LR
     A[スマートフォン・PC<br>個人情報] --> B[Personal AI<br>行動や嗜好の推定]
     B --> C[BCI<br>神経信号の読み取り]
     C --> D[双方向BCI<br>神経への刺激]
     D --> E[深いHuman–AI融合<br>記憶・判断・人格形成への関与]
 
-    style A fill:#edf5fb,stroke:#2d7fc1
-    style B fill:#edf5fb,stroke:#2d7fc1
-    style C fill:#e8f7f5,stroke:#54b9ba
-    style D fill:#e8f7f5,stroke:#54b9ba
-    style E fill:#dff2f4,stroke:#348c9a
+    style A fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
+    style B fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
+    style C fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style D fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style E fill:#DFF3F6,stroke:#147D92,stroke-width:2px,color:#102A43
 ```
 
 AIが脳から情報を**読む**場合、中心になるのは精神的プライバシーである。
@@ -74,6 +85,17 @@ AIが神経へ直接writeしなくても、表示、音声、AR、推薦、ナ�
 これを図にすると、認知主権は次のように整理できる。
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 mindmap
   root((認知主権))
     読まれない
@@ -189,6 +211,17 @@ Personal AI、認知データ、記憶補助システムなどを、別のシス
 **認知機能についてvendor lock-inされない権利**でもある。
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 flowchart LR
     A[クラウド契約終了]
     B[企業倒産]
@@ -207,7 +240,7 @@ flowchart LR
     F --> I[Exit]
     F --> J[Local Control]
 
-    style F fill:#e8f7f5,stroke:#54b9ba
+    style F fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
 ```
 
 ---
@@ -225,6 +258,17 @@ Personal AIや脳オルガノイドは、必ずしも頭蓋内や身体内に置
 という考え方を導入する。
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 flowchart LR
     subgraph PCTB[本人管理信頼境界]
         B[人間の脳]
@@ -245,8 +289,8 @@ flowchart LR
     L <--> G
     G <--> X
 
-    style PCTB fill:#f5fbfc,stroke:#54b9ba,stroke-width:2px
-    style X fill:#edf5fb,stroke:#2d7fc1
+    style PCTB fill:#F5FBFC,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style X fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
 ```
 
 この構造では、
@@ -274,6 +318,17 @@ AIの権限については、read-onlyを原則とするより、**Least Privile
 たとえばAIが神経刺激を必要だと判断した場合でも、AI自身が直接刺激を実行しない。
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 flowchart LR
     A[AI<br>刺激を提案]
     B[Safety Controller<br>医学・安全条件を検証]
@@ -284,11 +339,11 @@ flowchart LR
 
     A --> B --> C --> D --> E --> F
 
-    style A fill:#edf5fb,stroke:#2d7fc1
-    style B fill:#e8f7f5,stroke:#54b9ba
-    style C fill:#e8f7f5,stroke:#54b9ba
-    style D fill:#fff3df,stroke:#d8a03f
-    style E fill:#edf5fb,stroke:#2d7fc1
+    style A fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
+    style B fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style C fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style D fill:#FFF2CC,stroke:#A96F00,stroke-width:2px,color:#102A43
+    style E fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
 ```
 
 ここで重要なのは、
@@ -381,6 +436,17 @@ ZKPが得意なのは、
 つまり、ZKPが扱えるのは**暗号学的事実**であって、本人の内面的な意思そのものではない。
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 flowchart TB
     A[ZKPで証明できる]
     B[有効なcredential]
@@ -402,8 +468,8 @@ flowchart TB
     E --> H
     E --> I
 
-    style A fill:#e8f7f5,stroke:#54b9ba
-    style E fill:#fff1ef,stroke:#d46c5c
+    style A fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style E fill:#FFE8E6,stroke:#C0392B,stroke-width:2px,color:#7A1F1F
 ```
 
 そのため、ZKPは認知主権を単独で保証する技術ではなく、**認知主権を支える検証技術の一つ**と位置付けるべきである。
@@ -432,6 +498,17 @@ flowchart TB
 より自然なのは、
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 flowchart LR
     A[詳細な認知・神経履歴]
     B[本人管理の暗号化ストレージ]
@@ -444,8 +521,8 @@ flowchart LR
     C --> D
     D --> E
 
-    style B fill:#e8f7f5,stroke:#54b9ba
-    style D fill:#edf5fb,stroke:#2d7fc1
+    style B fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style D fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
 ```
 
 という構造である。
@@ -485,6 +562,17 @@ flowchart LR
 認証、secure boot、integrity verification、command authentication、監査などを継続的に行う。
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 flowchart LR
     A[Local-first]
     B[Data Minimization]
@@ -495,10 +583,10 @@ flowchart LR
     B --- C
     C --- D
 
-    style A fill:#e8f7f5,stroke:#54b9ba
-    style B fill:#edf5fb,stroke:#2d7fc1
-    style C fill:#e8f7f5,stroke:#54b9ba
-    style D fill:#edf5fb,stroke:#2d7fc1
+    style A fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style B fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
+    style C fill:#DDF4EE,stroke:#0F766E,stroke-width:2px,color:#102A43
+    style D fill:#E8F1FF,stroke:#1769AA,stroke-width:2px,color:#102A43
 ```
 
 ここで重要なのは、暗号技術だけに依存しないことである。
@@ -534,6 +622,17 @@ flowchart LR
 したがって、Human–AI融合には多層的なガバナンスが必要になる。
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 flowchart TB
     A[認知主権]
     B[権利]
@@ -549,7 +648,7 @@ flowchart TB
     C --> F
     D --> F
 
-    style A fill:#dff2f4,stroke:#348c9a,stroke-width:2px
+    style A fill:#D8F0F3,stroke:#0B7285,stroke-width:3px,color:#102A43
 ```
 
 具体的には、
@@ -597,6 +696,17 @@ flowchart TB
 + Person-Controlled Trust Boundary
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#E8F1FF",
+  "primaryTextColor":"#102A43",
+  "primaryBorderColor":"#1769AA",
+  "secondaryColor":"#DDF4EE",
+  "tertiaryColor":"#FFF2CC",
+  "lineColor":"#526D82",
+  "textColor":"#102A43",
+  "fontFamily":"Arial, sans-serif"
+}}}%%
 flowchart LR
     subgraph R[権利・哲学]
         R1[Mental Privacy]
@@ -619,7 +729,7 @@ flowchart LR
     R --> C[認知主権アーキテクチャ]
     E --> C
 
-    style C fill:#dff2f4,stroke:#348c9a,stroke-width:3px
+    style C fill:#DFF3F6,stroke:#147D92,stroke-width:3px,color:#102A43
 ```
 
 ---
