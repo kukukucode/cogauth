@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/cognitive-sovereignty/authorization-request.schema.json",
+  "title": "Cognitive Capability Authorization Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "principal",
+    "capability",
+    "resource",
+    "purpose",
+    "parameters"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:/-]+$"
+    },
+    "principal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        }
+      }
+    },
+    "purpose": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:/-]+$"
+    },
+    "parameters": {
+      "type": "object"
+    }
+  }
+}

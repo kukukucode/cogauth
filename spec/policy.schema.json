@@ -1,0 +1,279 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/cognitive-sovereignty/policy.schema.json",
+  "title": "Cognitive Capability Authorization Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "spec_version",
+    "policy_id",
+    "policy_version",
+    "issuer",
+    "principal",
+    "capability",
+    "resource",
+    "purpose",
+    "constraints",
+    "not_before",
+    "expires_at",
+    "required_approvals",
+    "attestation_requirements",
+    "audit_requirements",
+    "revocation_conditions"
+  ],
+  "properties": {
+    "spec_version": {
+      "const": "0.1-draft"
+    },
+    "policy_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:/-]+$",
+      "minLength": 1
+    },
+    "policy_version": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:/-]+$",
+      "minLength": 1
+    },
+    "issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "key_id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        },
+        "key_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        }
+      }
+    },
+    "principal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        }
+      }
+    },
+    "purpose": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:/-]+$"
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/predicate"
+      }
+    },
+    "not_before": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "required_approvals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "principals"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "all",
+            "threshold"
+          ]
+        },
+        "principals": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._:/-]+$"
+          }
+        },
+        "threshold": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "threshold"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "threshold"
+            ]
+          }
+        }
+      ]
+    },
+    "attestation_requirements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/predicate"
+      }
+    },
+    "audit_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mandatory",
+        "sink_required_for_allow"
+      ],
+      "properties": {
+        "mandatory": {
+          "type": "boolean"
+        },
+        "sink_required_for_allow": {
+          "type": "boolean"
+        }
+      }
+    },
+    "revocation_conditions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_must_be_active",
+        "principal_must_be_active",
+        "issuer_key_must_be_active"
+      ],
+      "properties": {
+        "policy_must_be_active": {
+          "type": "boolean"
+        },
+        "principal_must_be_active": {
+          "type": "boolean"
+        },
+        "issuer_key_must_be_active": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "predicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim",
+        "op"
+      ],
+      "properties": {
+        "claim": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:/-]+$"
+        },
+        "op": {
+          "enum": [
+            "eq",
+            "in",
+            "lte",
+            "gte",
+            "between",
+            "present"
+          ]
+        },
+        "value": {},
+        "min": {
+          "type": "integer"
+        },
+        "max": {
+          "type": "integer"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "op": {
+                "enum": [
+                  "eq",
+                  "in",
+                  "lte",
+                  "gte"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "op": {
+                "const": "between"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "min",
+              "max"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

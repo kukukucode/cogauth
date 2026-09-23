@@ -1,56 +1,54 @@
-# Illustrative example only.
+# Illustrative policy example.
 # Not an implemented protocol, medical specification, or safety certification.
 
-policy_version: "0.1"
+spec_version: "0.1-draft"
+
+policy_id: "cog.example.motor-assist"
+policy_version: "1"
+
+issuer:
+  id: "user-policy-root"
+  key_id: "key-2026-01"
 
 principal:
-  id: personal_ai
-  type: ai_agent
+  id: "personal-ai"
+  type: "ai_agent"
 
 capability:
-  action: propose_actuation
-  target: left_motor_cortex
+  action: "propose_actuation"
 
-purpose:
-  id: motor_assistance
+resource:
+  type: "neural_target"
+  id: "motor-interface-1"
+
+purpose: "motor_assistance"
 
 constraints:
-  max_amplitude_ma: 0
-  expires_in_seconds: 30
-  export_allowed: false
+  - claim: "request.parameters.mode"
+    op: "in"
+    value:
+      - "assist"
+      - "rehabilitation"
 
-authorization:
-  requires:
-    - user_policy
-    - safety_controller
+not_before: "2026-01-01T00:00:00Z"
+expires_at: "2027-01-01T00:00:00Z"
 
-execution:
-  personal_ai: denied
-  safety_controller: approval_only
-  hardware_interlock: required
-  neural_interface: execution_only
+required_approvals:
+  mode: "all"
+  principals:
+    - "user-policy"
+    - "safety-controller"
 
-attestation:
-  firmware_measurement_required: true
-  secure_boot_required: true
-  hardware_root_of_trust_required: true
+attestation_requirements:
+  - claim: "device.secure_boot"
+    op: "eq"
+    value: true
 
-audit:
+audit_requirements:
   mandatory: true
-  record:
-    - principal
-    - capability
-    - target
-    - purpose
-    - policy_version
-    - approvals
-    - attestation_status
-    - timestamp
+  sink_required_for_allow: true
 
-revocation:
-  supported: true
-  immediate_on:
-    - user_request
-    - attestation_failure
-    - policy_change
-    - safety_controller_failure
+revocation_conditions:
+  policy_must_be_active: true
+  principal_must_be_active: true
+  issuer_key_must_be_active: true

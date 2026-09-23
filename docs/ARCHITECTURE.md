@@ -314,3 +314,12 @@ Revocation / Expiry
 ```
 
 実例は `examples/policy-example.yaml` を参照。
+
+
+---
+
+# 13. Policy Semantics
+
+Capability Authorizationの決定的semanticsは [`../spec/POLICY_MODEL.md`](../spec/POLICY_MODEL.md) に分離する。
+
+Architectureは構成要素と責務を定義し、Policy Modelは同一入力に対するALLOW / DENY判定を定義する。

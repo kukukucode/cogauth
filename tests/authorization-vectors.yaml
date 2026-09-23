@@ -1,0 +1,151 @@
+spec_version: "0.1-draft"
+
+base_policy:
+  spec_version: "0.1-draft"
+  policy_id: "cog.example.motor-assist"
+  policy_version: "1"
+  issuer:
+    id: "user-policy-root"
+    key_id: "key-2026-01"
+  principal:
+    id: "personal-ai"
+    type: "ai_agent"
+  capability:
+    action: "propose_actuation"
+  resource:
+    type: "neural_target"
+    id: "motor-interface-1"
+  purpose: "motor_assistance"
+  constraints:
+    - claim: "request.parameters.mode"
+      op: "in"
+      value: ["assist", "rehabilitation"]
+  not_before: "2026-01-01T00:00:00Z"
+  expires_at: "2027-01-01T00:00:00Z"
+  required_approvals:
+    mode: "all"
+    principals: ["user-policy", "safety-controller"]
+  attestation_requirements:
+    - claim: "device.secure_boot"
+      op: "eq"
+      value: true
+  audit_requirements:
+    mandatory: true
+    sink_required_for_allow: true
+  revocation_conditions:
+    policy_must_be_active: true
+    principal_must_be_active: true
+    issuer_key_must_be_active: true
+
+base_request:
+  request_id: "req-0001"
+  principal:
+    id: "personal-ai"
+    type: "ai_agent"
+  capability:
+    action: "propose_actuation"
+  resource:
+    type: "neural_target"
+    id: "motor-interface-1"
+  purpose: "motor_assistance"
+  parameters:
+    mode: "assist"
+
+base_context:
+  evaluation_time: "2026-09-24T00:00:00Z"
+  policy_verified: true
+  verified_issuer:
+    id: "user-policy-root"
+    key_id: "key-2026-01"
+  status:
+    policy_active: true
+    principal_active: true
+    issuer_key_active: true
+  approvals:
+    - principal_id: "user-policy"
+      request_id: "req-0001"
+      valid: true
+    - principal_id: "safety-controller"
+      request_id: "req-0001"
+      valid: true
+  attestation:
+    device:
+      secure_boot: true
+  audit_sink_available: true
+
+tests:
+  - id: "allow-valid"
+    mutate: {}
+    expected:
+      decision: "ALLOW"
+      reason_code: "OK"
+
+  - id: "deny-unverified-policy"
+    mutate:
+      context.policy_verified: false
+    expected:
+      decision: "DENY"
+      reason_code: "POLICY_UNVERIFIED"
+
+  - id: "deny-expired"
+    mutate:
+      context.evaluation_time: "2027-01-01T00:00:00Z"
+    expected:
+      decision: "DENY"
+      reason_code: "POLICY_EXPIRED"
+
+  - id: "deny-principal-mismatch"
+    mutate:
+      request.principal.id: "external-ai"
+    expected:
+      decision: "DENY"
+      reason_code: "PRINCIPAL_MISMATCH"
+
+  - id: "deny-capability-mismatch"
+    mutate:
+      request.capability.action: "execute_actuation"
+    expected:
+      decision: "DENY"
+      reason_code: "CAPABILITY_MISMATCH"
+
+  - id: "deny-purpose-mismatch"
+    mutate:
+      request.purpose: "advertising"
+    expected:
+      decision: "DENY"
+      reason_code: "PURPOSE_MISMATCH"
+
+  - id: "deny-constraint-failed"
+    mutate:
+      request.parameters.mode: "unlisted-mode"
+    expected:
+      decision: "DENY"
+      reason_code: "CONSTRAINT_FAILED"
+
+  - id: "deny-approval-missing"
+    mutate:
+      context.approvals: []
+    expected:
+      decision: "DENY"
+      reason_code: "APPROVAL_MISSING"
+
+  - id: "deny-attestation-failed"
+    mutate:
+      context.attestation.device.secure_boot: false
+    expected:
+      decision: "DENY"
+      reason_code: "ATTESTATION_FAILED"
+
+  - id: "deny-audit-unavailable"
+    mutate:
+      context.audit_sink_available: false
+    expected:
+      decision: "DENY"
+      reason_code: "AUDIT_UNAVAILABLE"
+
+  - id: "deny-policy-revoked"
+    mutate:
+      context.status.policy_active: false
+    expected:
+      decision: "DENY"
+      reason_code: "POLICY_REVOKED"

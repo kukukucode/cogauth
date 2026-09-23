@@ -102,6 +102,15 @@ flowchart LR
 - [Related Work](docs/RELATED_WORK.md)  
   neurorights、trusted computing、provenanceとの関係と差分
 
+- [Policy Model](spec/POLICY_MODEL.md)  
+  Cognitive Capability Authorizationの決定的semantics
+
+- [Policy JSON Schema](spec/policy.schema.json)  
+  Policy構造の機械検証用schema
+
+- [Authorization Test Vectors](tests/authorization-vectors.yaml)  
+  実装間でALLOW / DENY結果を一致させるためのconformance例
+
 - [Illustrative Policy Example](examples/policy-example.yaml)  
   概念を具体化するための機械可読例
 
